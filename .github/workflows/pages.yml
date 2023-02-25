@@ -4,10 +4,17 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: docker://emscripten/emsdk
+    container: docker://variantxyz/emscripten_rgbds:latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          submodules: 'true'
+
+      - name: Build RGBDS
+        working-directory: external/rgbds
+        run: |
+          make CC=emcc PNGCFLAGS='' PNGLDFLAGS='' PNGLDLIBS='' CFLAGS="-O3 -flto -DNDEBUG -s USE_LIBPNG" -j
 
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
