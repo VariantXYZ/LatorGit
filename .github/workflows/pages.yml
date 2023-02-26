@@ -14,7 +14,9 @@ jobs:
       - name: Build RGBDS
         working-directory: external/rgbds
         run: |
-          make CC=emcc PNGCFLAGS='' PNGLDFLAGS='' PNGLDLIBS='' CFLAGS="-O3 -flto -DNDEBUG -s USE_LIBPNG" -j
+          make CC=emcc PNGCFLAGS='' PNGLDFLAGS='' PNGLDLIBS='' CFLAGS="-O3 -flto -DNDEBUG -s MODULARIZE=1 -lproxyfs.js -s EXPORTED_RUNTIME_METHODS=['PROXYFS','FS'] -s EXPORT_NAME=createRgbAsm" rgbasm -j
+          make CC=emcc PNGCFLAGS='' PNGLDFLAGS='' PNGLDLIBS='' CFLAGS="-O3 -flto -DNDEBUG -s MODULARIZE=1 -s EXPORTED_RUNTIME_METHODS=['FS'] -s EXPORT_NAME=createRgbLink" rgblink -j 
+          make CC=emcc PNGCFLAGS='' PNGLDFLAGS='' PNGLDLIBS='' CFLAGS="-O3 -flto -DNDEBUG -s MODULARIZE=1 -s EXPORTED_RUNTIME_METHODS=['FS'] -s USE_LIBPNG -s EXPORT_NAME=createRgbGfx" rgbgfx -j
 
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1

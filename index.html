@@ -1,3 +1,5 @@
+<script src="external/rgbds/rgbasm"></script>
+
 <script type="module">
 
 var repository_name = 'medarot3';
@@ -5,6 +7,7 @@ var repository_url = 'https://github.com/Medabots/medarot3';
 var repository_ref = 'tr_EN';
 var repository_id = repository_name + '_' + repository_ref;
 var repository_dir = '/' + repository_id;
+var repository_build_dir = repository_dir + '/build';
 
 import './external/lightning-fs-4.6.0/lightning-fs.min.js'
 import './external/isomorphic-git-1.21.0/index.umd.min.js'
@@ -32,4 +35,28 @@ console.log("Cloned repository");
 
 console.log(await pfs.readdir(repository_dir));
 
+console.log("Create build directory");
+await pfs.mkdir(repository_build_dir);
+console.log(await pfs.readdir(repository_dir));
+
+console.log("rgbasm");
+console.log(await pfs.readdir(repository_dir + '/game/src/tutorial/'));
+
+var target = '/data' + repository_dir + '/game/src/tutorial/core.asm';
+var output = '/data' + repository_build_dir + '/' + target + '.o';
+
+console.log(fs.lstat('/'));
+
+await createRgbAsm({
+  'arguments': [target, '-o', output, '-Wall'],
+  'print': console.log, 
+  'printErr': console.log,
+  'preRun': function(m) {
+    var FS = m.FS;
+    FS.createPath(FS.root, 'data', true, true);
+    FS.mount(m.PROXYFS, {root: '/', fs: fs}, '/data');
+  }
+});
+
+console.log(await pfs.readdir(repository_build_dir));
 </script>
