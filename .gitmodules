@@ -1,0 +1,3 @@
+[submodule "external/rgbds"]
+	path = external/rgbds
+	url = git@github.com:VariantXYZ/rgbds.git

@@ -1,0 +1,39 @@
+name: Build and Deploy GHP
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: docker://variantxyz/emscripten_rgbds:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: 'true'
+
+      - name: Build RGBDS
+        run: |
+          sh ./build.sh
+
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v1
+  
+  deploy:
+    needs: build
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    permissions:
+      pages: write
+      id-token: write
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
