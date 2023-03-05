@@ -1,35 +1,11 @@
-<script type="module">
-
-var repository_name = 'medarot3';
-var repository_url = 'https://github.com/Medabots/medarot3';
-var repository_ref = 'tr_EN';
-var repository_id = repository_name + '_' + repository_ref;
-var repository_dir = '/' + repository_id;
-
-import './external/lightning-fs-4.6.0/lightning-fs.min.js'
-import './external/isomorphic-git-1.21.0/index.umd.min.js'
-import http from './external/isomorphic-git-1.21.0/http/web/index.js'
-
-// (TODO: For now, just wipe the FS every time)
-var fs = new LightningFS(repository_name, { wipe: true });
-var pfs = fs.promises;
-
-console.log("Creating empty directory");
-await pfs.mkdir(repository_dir);
-console.log("Created empty directory");
-
-console.log("Cloning repository");
-await git.clone({
-  fs: fs,
-  http: http,
-  dir: repository_dir,
-  url: repository_url,
-  ref: repository_ref,
-  singleBranch: true,
-  depth: 1
-});
-console.log("Cloned repository");
-
-console.log(await pfs.readdir(repository_dir));
-
-</script>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="icon" href="data:,">
+    <meta charset="UTF-8">
+  </head>
+  <body bgcolor="white">
+    <canvas id="output"></canvas>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
