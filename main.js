@@ -1,7 +1,7 @@
 import {
   repo_init,
   repo_pull
-} from './modules/repository.js'
+} from './modules/repository.js';
 
 var repository_name = 'medarot3';
 var repository_url = 'https://github.com/Medabots/medarot3';

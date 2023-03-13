@@ -1,6 +1,6 @@
-import '../external/lightning-fs-4.6.0/lightning-fs.min.js'
-import '../external/isomorphic-git-1.21.0/index.umd.min.js'
-import http from '../external/isomorphic-git-1.21.0/http/web/index.js'
+import '../external/lightning-fs-4.6.0/lightning-fs.min.js';
+import '../external/isomorphic-git-1.21.0/index.umd.min.js';
+import http from '../external/isomorphic-git-1.21.0/http/web/index.js';
 
 export const repo_init = async (repository_name) => {
 	// (TODO: For now, just wipe the FS every time)
@@ -10,7 +10,7 @@ export const repo_init = async (repository_name) => {
 	var pfs = fs.promises;
 
 	return {fs: fs, pfs: pfs};
-}
+};
 
 export const repo_pull = async (state, repository_url, repository_ref, repository_dir) => {
 	var fs = state.fs;
@@ -32,4 +32,4 @@ export const repo_pull = async (state, repository_url, repository_ref, repositor
 	});
 	console.log("Cloned repository");
 	console.log(await pfs.readdir(repository_dir));
-}
+};
