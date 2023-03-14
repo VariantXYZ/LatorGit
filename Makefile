@@ -33,6 +33,8 @@ MINIFIED_EXTERNAL_MODULES := $(foreach MODULE,$(MODULES_EXTERNAL_JS), $(addsuffi
 ###
 
 .PHONY: print_versions default all clean site
+.SECONDARY:
+
 default: site
 all: default
 
@@ -47,7 +49,6 @@ $(OUTDIR_ROOT)/%.$(EXT_HTML): $(DIR_ROOT)/%.$(EXT_HTML) | $$(@D)/
 	cp $< $@ 
 
 # _site/%.js from ./%.js
-.SECONDARY:
 .SECONDEXPANSION:
 $(OUTDIR_ROOT)/%.$(EXT_MINJS): $(DIR_ROOT)/%.$(EXT_JS) | $$(@D)/
 	$(TOOL_MINIFY) --compress --mangle --module --output $@ $<
